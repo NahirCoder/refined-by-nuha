@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Admin Panel</title>
+
+<link rel="stylesheet"
+href="css/styles.css">
+
+</head>
+
+<body>
+
+<main class="admin-container">
+
+<h1 id="business-name">
+
+Loading...
+
+</h1>
+
+<h2>
+
+Admin Panel
+
+</h2>
+
+<button id="save-all-button">
+
+💾 Save All Changes
+
+</button>
+
+<div class="admin-section">
+
+<button
+class="section-toggle"
+data-section="settings">
+
+⚙ Settings
+
+</button>
+
+<div
+id="settings"
+class="section-content">
+
+<img
+id="settings-logo-preview"
+class="settings-logo"
+src="">
+
+<input
+type="file"
+id="settings-logo"
+accept="image/*">
+
+<input
+type="text"
+id="settings-name"
+placeholder="Business Name">
+
+<textarea
+id="settings-about"
+placeholder="About"></textarea>
+
+<input
+type="text"
+id="settings-whatsapp"
+placeholder="WhatsApp Number">
+
+<button
+id="save-settings">
+
+💾 Save Settings
+
+</button>
+
+</div>
+
+</div>
+
+<div class="admin-section">
+
+<button
+class="section-toggle"
+data-section="categories">
+
+📁 Categories
+
+</button>
+
+<div
+id="categories"
+class="section-content">
+
+</div>
+
+</div>
+
+<div class="admin-section">
+
+<button
+class="section-toggle"
+data-section="products">
+
+📱 Products
+
+</button>
+
+<div
+id="products"
+class="section-content">
+
+</div>
+
+</div>
+
+<button id="home-button">
+
+🏠 Back to Home
+
+</button>
+
+<button id="logout-button">
+
+🚪 Logout
+
+</button>
+
+</main>
+
+<script src="js/admin.js"></script>
+
+</body>
+
+</html>
