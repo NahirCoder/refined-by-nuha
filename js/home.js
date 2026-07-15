@@ -40,10 +40,10 @@ async function loadHome() {
         =========================
         */
 
-        document
-        .getElementById("seo-description")
-        .content =
-            settings.about || "";
+      const seoDescription = document.getElementById("seo-description");
+if (seoDescription) {
+    seoDescription.content = settings.about || "";
+}
 
 
         /*
