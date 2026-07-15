@@ -33,9 +33,9 @@ body {
 
 .business-logo {
 
-    width: 160px;
+    width: 220px;
 
-    height: 160px;
+    height: 220px;
 
     object-fit: contain;
 
@@ -47,7 +47,7 @@ body {
 
     margin-top: 20px;
 
-    font-size: 40px;
+    font-size: 56px;
 
 }
 
@@ -57,7 +57,7 @@ body {
 
     margin-top: 15px;
 
-    font-size: 18px;
+    font-size: 22px;
 
     line-height: 1.6;
 
@@ -625,9 +625,17 @@ footer {
 
     }
 
+    .business-logo{
+
+        width:160px;
+
+        height:160px;
+
+    }
+
     .business-header h1{
 
-        font-size:32px;
+        font-size:36px;
 
         word-break:break-word;
 
@@ -635,7 +643,7 @@ footer {
 
     .business-header p{
 
-        font-size:16px;
+        font-size:18px;
 
     }
 
