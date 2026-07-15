@@ -10,131 +10,152 @@ async function loadCategory() {
 
 
 
-    const response = await fetch(
-        `/api/products?category=${categoryId}`
-    );
+    try {
 
 
-    const products = await response.json();
+        // Fetch category info so we can show its name
+        const categoriesResponse =
+            await fetch("/api/categories");
+
+        const categories =
+            await categoriesResponse.json();
+
+        const category = Array.isArray(categories)
+            ? categories.find(c => c.id == categoryId)
+            : null;
+
+        document.getElementById("category-name").textContent =
+            category?.name || "";
+
+        document.title =
+            category?.name || "Products";
 
 
 
-    const container =
-        document.getElementById("products-container");
+        const response = await fetch(
+            `/api/products?category=${categoryId}`
+        );
+
+
+        const products = await response.json();
 
 
 
-    container.innerHTML = "";
+        const container =
+            document.getElementById("products-container");
+
+
+        container.innerHTML = "";
 
 
 
-    if (products.length === 0) {
+        if (!Array.isArray(products) || products.length === 0) {
 
-        container.innerHTML = `
+            container.innerHTML = `
 
-            <div class="empty-category">
+                <div class="empty-category">
 
-                <h2>This category is empty.</h2>
+                    <h2>This category is empty.</h2>
 
-                <p>Please check back later for new products.</p>
+                    <p>Please check back later for new products.</p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+
+        products.forEach(product => {
+
+
+
+            const images = product.product_images || [];
+
+
+
+            const card = document.createElement("div");
+
+
+            card.className = "product-card";
+
+
+
+            card.innerHTML = `
+
+            <p>
+            Click on image to view in full
+            </p>
+
+
+            <div class="product-images">
+
+            ${
+                images.map(image => `
+
+                <img
+                src="${image.image_url}"
+                onclick="window.open('${image.image_url}','_blank')"
+                >
+
+                `).join("")
+            }
 
             </div>
 
-        `;
 
-        return;
-
-    }
-
+            <h2>
+            ${product.name}
+            </h2>
 
 
-    products.forEach(product => {
+            <p>
+            ${product.description}
+            </p>
 
 
-
-        const images = product.product_images || [];
-
-
-
-        const card = document.createElement("div");
+            <p>
+            Price: R${product.price}
+            </p>
 
 
-        card.className = "product-card";
+            <p>
 
+            ${
+                product.available
+                ?
+                "Available"
+                :
+                "Out of Stock"
+            }
 
-
-        card.innerHTML = `
-
-        <p>
-        Click on image to view in full
-        </p>
-
-
-        <div class="product-images">
-
-        ${
-            images.map(image => `
-
-            <img
-            src="${image.image_url}"
-            onclick="window.open('${image.image_url}','_blank')"
-            >
-
-            `).join("")
-        }
-
-        </div>
-
-
-        <h2>
-        ${product.name}
-        </h2>
-
-
-        <p>
-        ${product.description}
-        </p>
-
-
-        <p>
-        Price: R${product.price}
-        </p>
-
-
-        <p>
-
-        ${
-            product.available
-            ?
-            "Available"
-            :
-            "Out of Stock"
-        }
-
-        </p>
+            </p>
 
 
 
-        <button class="product-whatsapp">
+            <button class="product-whatsapp">
 
-        📱 Ask about this product on WhatsApp
+            📱 Ask about this product on WhatsApp
 
-        </button>
-
-
-        `;
+            </button>
 
 
-
-        card.querySelector(".product-whatsapp")
-        .onclick = () => {
+            `;
 
 
-            const settingsResponse = await fetch("/api/settings");
 
-const settings = await settingsResponse.json();
+            card.querySelector(".product-whatsapp")
+            .onclick = async () => {
 
-const message = `Hi, I'm interested in this product.
+
+                const settingsResponse = await fetch("/api/settings");
+
+                const settings = await settingsResponse.json();
+
+                const message = `Hi, I'm interested in this product.
 
 Product:
 ${product.name}
@@ -146,26 +167,33 @@ Price:
 R${product.price}
 
 Category:
-${product.categories.name}`;
+${product.categories?.name || category?.name || ""}`;
 
-window.open(
+                window.open(
 
-    `https://wa.me/${settings.whatsapp_number}?text=${encodeURIComponent(message)}`,
+                    `https://wa.me/${settings.whatsapp_number}?text=${encodeURIComponent(message)}`,
 
-    "_blank"
+                    "_blank"
 
-);
-
-
-        };
+                );
 
 
-
-        container.appendChild(card);
+            };
 
 
 
-    });
+            container.appendChild(card);
+
+
+
+        });
+
+
+    } catch (err) {
+
+        console.error("Error loading category page:", err);
+
+    }
 
 
 }
