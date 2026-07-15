@@ -14,6 +14,19 @@ function authHeaders(){
 }
 
 
+function uploadAuthHeaders(){
+
+    return {
+
+        "Authorization":
+            "Bearer " +
+            localStorage.getItem("access_token")
+
+    };
+
+}
+
+
 async function checkSession(){
 
     const token =
@@ -222,6 +235,9 @@ async function loadCategories(){
                     method:"POST",
 
 
+                    headers: uploadAuthHeaders(),
+
+
                     body:file
 
 
@@ -233,6 +249,9 @@ async function loadCategories(){
 
 
                 newImageUrl=result.url;
+
+
+                box.file=null;
 
 
             }
@@ -296,7 +315,9 @@ async function loadCategories(){
                 `/api/categories?id=${category.id}`,
                 {
 
-                    method:"DELETE"
+                    method:"DELETE",
+
+                    headers: uploadAuthHeaders()
 
                 }
             );
@@ -340,13 +361,7 @@ async function loadCategories(){
             method:"POST",
 
 
-            headers:{
-
-
-                "Content-Type":"application/json"
-
-
-            },
+            headers: authHeaders(),
 
 
             body:JSON.stringify({
@@ -622,6 +637,8 @@ async function loadProducts(){
 
                     method:"POST",
 
+                    headers: uploadAuthHeaders(),
+
                     body:image
 
                 });
@@ -641,17 +658,17 @@ async function loadProducts(){
 
 
 
+            imageUrls = finalImages;
+
+
+
 
 
             await fetch("/api/products",{
 
                 method:"PUT",
 
-                headers:{
-
-                    "Content-Type":"application/json"
-
-                },
+                headers: authHeaders(),
 
                 body:JSON.stringify({
 
@@ -714,7 +731,9 @@ async function loadProducts(){
             `/api/products?id=${product.id}`,
             {
 
-                method:"DELETE"
+                method:"DELETE",
+
+                headers: uploadAuthHeaders()
 
             });
 
@@ -755,12 +774,7 @@ async function loadProducts(){
             method:"POST",
 
 
-            headers:{
-
-
-                "Content-Type":"application/json"
-
-            },
+           headers: authHeaders(),
 
 
             body:JSON.stringify({
@@ -923,6 +937,9 @@ document.getElementById("save-settings")
             method:"POST",
 
 
+            headers: uploadAuthHeaders(),
+
+
             body:file
 
 
@@ -947,13 +964,7 @@ document.getElementById("save-settings")
         method:"PUT",
 
 
-        headers:{
-
-
-            "Content-Type":"application/json"
-
-
-        },
+        headers: authHeaders(),
 
 
         body:JSON.stringify({
@@ -1000,7 +1011,7 @@ document.getElementById("save-settings")
 async function leaveAdmin(destination){
 
 
-    localStorage.removeItem("session");
+    localStorage.removeItem("access_token");
 
 
     location.replace(destination);
