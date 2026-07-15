@@ -1,4 +1,5 @@
 import supabase from "./_supabase.js";
+import { requireAuth } from "./_auth.js";
 
 export const config = {
 
@@ -38,6 +39,11 @@ export default async function handler(req, res) {
 
     }
 
+        const user = await requireAuth(req, res);
+
+    if (!user) {
+        return;
+    }
     try {
 
         const file = await readFile(req);

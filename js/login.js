@@ -1,53 +1,72 @@
-import { createClient } from "@supabase/supabase-js";
+async function loadBusinessName() {
 
-export default async function handler(req, res) {
+    const response = await fetch("/api/settings");
+    const settings = await response.json();
 
-    if (req.method !== "POST") {
-
-        return res.status(405).json({
-
-            error: "Method not allowed"
-
-        });
-
-    }
-
-    const { email, password } = req.body;
-
-    const supabase = createClient(
-
-        process.env.SUPABASE_URL,
-
-        process.env.SUPABASE_ANON_KEY
-
-    );
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-
-        email,
-
-        password
-
-    });
-
-    if (error) {
-
-        return res.status(401).json({
-
-            success: false,
-
-            error: "Incorrect email and/or password!"
-
-        });
-
-    }
-
-    return res.status(200).json({
-
-        success: true,
-
-        session: data.session
-
-    });
+    document.getElementById("business-name").textContent =
+        settings.business_name || "Business";
 
 }
+
+loadBusinessName();
+
+document.getElementById("back-home").onclick = () => {
+
+    location.href = "/";
+
+};
+
+document.getElementById("show-password").onclick = () => {
+
+    const password = document.getElementById("password");
+
+    password.type =
+        password.type === "password"
+            ? "text"
+            : "password";
+
+};
+
+document.getElementById("login-button").onclick = async () => {
+
+    document.getElementById("login-error").textContent = "";
+
+    const response = await fetch("/api/login", {
+
+        method: "POST",
+
+        headers: {
+
+            "Content-Type": "application/json"
+
+        },
+
+        body: JSON.stringify({
+
+            email: document.getElementById("email").value,
+
+            password: document.getElementById("password").value
+
+        })
+
+    });
+
+    const result = await response.json();
+
+    if (!result.success) {
+
+        document.getElementById("login-error").textContent =
+            result.error;
+
+        return;
+
+    }
+
+    localStorage.setItem(
+        "access_token",
+        result.session.access_token
+    );
+
+    location.href = "/admin.html";
+
+};

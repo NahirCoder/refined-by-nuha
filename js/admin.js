@@ -1,24 +1,32 @@
 let hasUnsavedChanges = false;
+function authHeaders(){
 
+    return {
+
+        "Content-Type":"application/json",
+
+        "Authorization":
+            "Bearer " +
+            localStorage.getItem("access_token")
+
+    };
+
+}
 
 
 async function checkSession(){
 
+    const token =
+        localStorage.getItem("access_token");
 
-    const session = localStorage.getItem("session");
-
-
-    if(!session){
+    if(!token){
 
         location.replace("/login.html");
-
         return false;
 
     }
 
-
     return true;
-
 
 }
 
@@ -238,13 +246,7 @@ async function loadCategories(){
                 method:"PUT",
 
 
-                headers:{
-
-
-                    "Content-Type":"application/json"
-
-
-                },
+                headers: authHeaders(),
 
 
                 body:JSON.stringify({
