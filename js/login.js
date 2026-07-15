@@ -1,99 +1,53 @@
-async function loadBusinessName() {
+import { createClient } from "@supabase/supabase-js";
 
-    const response = await fetch("/api/settings");
-    const settings = await response.json();
+export default async function handler(req, res) {
 
-    document.getElementById("business-name").textContent =
-        settings.business_name;
+    if (req.method !== "POST") {
 
-}
+        return res.status(405).json({
 
-loadBusinessName();
-
-document.getElementById("back-home").onclick = () => {
-
-    location.href = "/";
-
-};
-
-document.getElementById("show-password").onclick = () => {
-
-    const password = document.getElementById("password");
-
-    password.type =
-        password.type === "password"
-            ? "text"
-            : "password";
-
-};
-
-document.getElementById("login-button").onclick = async () => {
-
-    const button = document.getElementById("login-button");
-    const errorText = document.getElementById("login-error");
-
-    errorText.textContent = "";
-
-    button.disabled = true;
-    button.textContent = "Logging In...";
-
-    try {
-
-        const response = await fetch("/api/login", {
-
-            method: "POST",
-
-            headers: {
-
-                "Content-Type": "application/json"
-
-            },
-
-            body: JSON.stringify({
-
-                email: document.getElementById("email").value,
-
-                password: document.getElementById("password").value
-
-            })
+            error: "Method not allowed"
 
         });
 
-        const result = await response.json();
-
-        if (!response.ok) {
-
-            errorText.textContent =
-                result.error || "Incorrect email and/or password!";
-
-            return;
-
-        }
-
-        localStorage.setItem(
-
-            "session",
-
-            JSON.stringify(result.session)
-
-        );
-
-        location.href = "admin.html";
-
     }
-    catch (error) {
 
-        console.error(error);
+    const { email, password } = req.body;
 
-        errorText.textContent =
-            "Unable to connect to the server.";
+    const supabase = createClient(
 
-    }
-    finally {
+        process.env.SUPABASE_URL,
 
-        button.disabled = false;
-        button.textContent = "Login";
+        process.env.SUPABASE_ANON_KEY
+
+    );
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+
+        email,
+
+        password
+
+    });
+
+    if (error) {
+
+        return res.status(401).json({
+
+            success: false,
+
+            error: "Incorrect email and/or password!"
+
+        });
 
     }
 
-};
+    return res.status(200).json({
+
+        success: true,
+
+        session: data.session
+
+    });
+
+}
