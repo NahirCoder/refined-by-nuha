@@ -26,21 +26,21 @@ body.rainbow-page {
 
         135deg,
 
-        #ffd6d6,
-        #ffe6cc,
-        #fffacc,
-        #d9f7d9,
-        #cceeff,
-        #d6d6ff,
-        #ecd6ff,
-        #ffd6f0,
-        #ffd6d6
+        #ff0000,
+        #ff8000,
+        #ffff00,
+        #00ff00,
+        #00ffff,
+        #0000ff,
+        #8000ff,
+        #ff00ff,
+        #ff0000
 
     );
 
     background-size: 400% 400%;
 
-    animation: rainbowShift 20s ease infinite;
+    animation: rainbowShift 15s ease infinite;
 
 }
 
@@ -75,6 +75,12 @@ body.rainbow-page {
 
     padding: 40px 20px;
 
+    background: rgba(255,255,255,0.85);
+
+    border-radius: 16px;
+
+    margin: 20px;
+
 }
 
 
@@ -87,29 +93,15 @@ body.rainbow-page {
 
     object-fit: contain;
 
-    background: rgba(255,255,255,0.75);
-
-    border-radius: 50%;
-
-    padding: 10px;
-
 }
 
 
 
 .business-header h1 {
 
-    display: inline-block;
-
     margin-top: 20px;
 
-    padding: 8px 20px;
-
     font-size: 56px;
-
-    background: rgba(255,255,255,0.75);
-
-    border-radius: 10px;
 
 }
 
@@ -117,19 +109,11 @@ body.rainbow-page {
 
 .business-header p {
 
-    display: inline-block;
-
     margin-top: 15px;
-
-    padding: 10px 20px;
 
     font-size: 22px;
 
     line-height: 1.6;
-
-    background: rgba(255,255,255,0.75);
-
-    border-radius: 10px;
 
 }
 
@@ -161,6 +145,12 @@ body.rainbow-page {
 
     padding:40px 20px;
 
+    background: rgba(255,255,255,0.85);
+
+    border-radius: 16px;
+
+    margin: 20px;
+
 }
 
 
@@ -170,14 +160,6 @@ body.rainbow-page {
     text-align:center;
 
     margin-bottom:30px;
-
-    display: inline-block;
-
-    padding: 8px 20px;
-
-    background: rgba(255,255,255,0.75);
-
-    border-radius: 10px;
 
 }
 
@@ -266,18 +248,11 @@ footer {
 
     padding:30px;
 
-}
+    background: rgba(255,255,255,0.85);
 
+    border-radius: 16px;
 
-.category-header h1 {
-
-    display: inline-block;
-
-    padding: 8px 20px;
-
-    background: rgba(255,255,255,0.75);
-
-    border-radius: 10px;
+    margin: 20px;
 
 }
 
@@ -691,37 +666,25 @@ footer {
 
     padding: 50px 20px;
 
+    background: rgba(255,255,255,0.85);
+
+    border-radius: 16px;
+
 }
 
 .empty-category h2 {
-
-    display: inline-block;
-
-    padding: 8px 20px;
 
     font-size: 28px;
 
     margin-bottom: 10px;
 
-    background: rgba(255,255,255,0.75);
-
-    border-radius: 10px;
-
 }
 
 .empty-category p {
 
-    display: inline-block;
-
-    padding: 6px 16px;
-
     color: #666;
 
     font-size: 18px;
-
-    background: rgba(255,255,255,0.75);
-
-    border-radius: 10px;
 
 }
 @media (max-width:600px){
